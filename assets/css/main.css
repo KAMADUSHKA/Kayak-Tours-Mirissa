@@ -614,6 +614,26 @@ h6 {
   max-height: 200px;
 }
 
+.footer .footer-logo {
+  display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@media (max-width : 768px) {
+  .footer .footer-about a, .footer .footer-about .footer-contact p, .footer .footer-about .social-links{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .footer .footer-links ul li, .footer .footer-links h4 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
 /*--------------------------------------------------------------
 # Preloader
 --------------------------------------------------------------*/
