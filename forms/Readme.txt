@@ -1,2 +1,2 @@
 Fully working PHP/AJAX contact form script is available in the pro version of the template.
-You can buy it from: https://bootstrapmade.com/Kayak Tours Mirissa-bootstrap-hospital-website-template/
+You can buy it from: https://bootstrapmade.com/Mirissa River Kayak Tours-bootstrap-hospital-website-template/

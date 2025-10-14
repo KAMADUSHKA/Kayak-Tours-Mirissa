@@ -1,1 +1,1 @@
-Template Name: Kayak Tours Mirissa
+Template Name: Mirissa River Kayak Tours
