@@ -1,6 +1,6 @@
 /**
-* Template Name: Mirissa River Kayak Tours
-* Template URL: https://bootstrapmade.com/Mirissa River Kayak Tours-bootstrap-hospital-website-template/
+* Template Name: Mirissa Kayak Tours
+* Template URL: https://bootstrapmade.com/Mirissa Kayak Tours-bootstrap-hospital-website-template/
 * Updated: Jul 04 2025 with Bootstrap v5.3.7
 * Author: BootstrapMade.com
 * License: https://bootstrapmade.com/license/
