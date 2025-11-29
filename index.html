@@ -1274,14 +1274,14 @@
       const formData = new FormData(form);
 
       const loading = form.querySelector('.loading');
-      const errorDiv = form.querySelector('.error-message');
+      // const errorDiv = form.querySelector('.error-message');
       const successDiv = form.querySelector('.sent-message');
 
       // Reset and show loading
       loading.style.display = "block";
-      errorDiv.style.display = "none";
+      // errorDiv.style.display = "none";
       successDiv.style.display = "none";
-      errorDiv.textContent = "";
+      // errorDiv.textContent = "";
 
       try {
           const response = await fetch('send_email.php', {
@@ -1302,20 +1302,20 @@
               }, 3000);
           } else {
             loading.style.display = "none";
-            const errorText = await response.text();
-            errorDiv.textContent = errorText || "Something went wrong. Please try again.";
-            errorDiv.style.display = "block";
+            // const errorText = await response.text();
+            // errorDiv.textContent = errorText || "Something went wrong. Please try again.";
+            // errorDiv.style.display = "block";
 
-            // Hide success message after 3 seconds
-            setTimeout(() => {
-                errorDiv.style.display = "none";
-            }, 3000);
+            // // Hide success message after 3 seconds
+            // setTimeout(() => {
+            //     errorDiv.style.display = "none";
+            // }, 3000);
           }
 
       } catch (error) {
           loading.style.display = "none";
-          errorDiv.textContent = "Failed to send message. Please check your connection.";
-          errorDiv.style.display = "block";
+          // errorDiv.textContent = "Failed to send message. Please check your connection.";
+          // errorDiv.style.display = "block";
           console.error('Error:', error);
       }
   });
