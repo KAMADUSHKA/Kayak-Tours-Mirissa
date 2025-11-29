@@ -377,7 +377,7 @@
               }, 3000);
           } else {
               const errorText = await response.text();
-              errorDiv.textContent =  "Something went wrong. Please try again.";
+              errorDiv.textContent = errorText || "Something went wrong. Please try again.";
               errorDiv.style.display = "block";
 
               // Hide success message after 3 seconds
