@@ -806,7 +806,7 @@
           <!-- Appointment Form -->
           <div class="col-lg-6">
             <div class="appointment-form-wrapper" data-aos="fade-up" data-aos-delay="200">
-              <form action="forms/appointment.php" method="post" class="appointment-form php-email-form">
+              <form method="post" class="appointment-form php-email-form" id="appointment-form">
                 <div class="row gy-3">
 
                   <div class="col-md-6">
@@ -1266,3 +1266,49 @@
 </body>
 
 </html>
+
+<!-- Form Submission -->
+<script>
+  document.getElementById('appointment-form').addEventListener('submit', async function (e) {
+    e.preventDefault(); // Prevent default form submission
+
+    const form = e.target;
+    const formData = new FormData(form);
+    const statusDiv = document.getElementById('formStatus');
+
+    // Show "Processing..." message immediately
+    statusDiv.textContent = 'Processing... please wait';
+    statusDiv.className = 'form-status processing';
+    statusDiv.style.display = 'block';
+
+    try {
+      const response = await fetch('send_email.php', {
+        method: 'POST',
+        body: formData
+      });
+
+      if (response.ok) {
+        statusDiv.textContent = 'Message sent successfully!';
+        statusDiv.className = 'form-status success';
+        form.reset(); // Clear the form
+      } else {
+        const errorText = await response.text();
+        throw new Error(errorText);
+      }
+    } catch (error) {
+      console.error(error);
+      statusDiv.textContent = 'There was a problem sending your message.';
+      statusDiv.className = 'form-status error';
+    }
+
+    // Hide message after 3 seconds
+    setTimeout(() => {
+      statusDiv.style.display = 'none';
+    }, 3000);
+  });
+
+  // Set today's date as min date
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('date').setAttribute('min', today);
+
+</script>

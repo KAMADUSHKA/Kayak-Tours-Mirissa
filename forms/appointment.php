@@ -1,46 +1,81 @@
 <?php
-  /**
-  * Requires the "PHP Email Form" library
-  * The "PHP Email Form" library is available only in the pro version of the template
-  * The library should be uploaded to: vendor/php-email-form/php-email-form.php
-  * For more info and help: https://bootstrapmade.com/php-email-form/
-  */
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
-  // Replace contact@example.com with your real receiving email address
-  $receiving_email_address = 'contact@example.com';
+require '../vendor/autoload.php';  // Correct path (adjust if needed)
 
-  if( file_exists($php_email_form = '../assets/vendor/php-email-form/php-email-form.php' )) {
-    include( $php_email_form );
-  } else {
-    die( 'Unable to load the "PHP Email Form" Library!');
-  }
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-  $contact = new PHP_Email_Form;
-  $contact->ajax = true;
-  
-  $contact->to = $receiving_email_address;
-  $contact->from_name = $_POST['name'];
-  $contact->from_email = $_POST['email'];
-  $contact->subject = 'Online Appointment Form';
+    // Get inputs from form
+    $name        = htmlspecialchars($_POST['name']);
+    $email       = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
+    $phone       = htmlspecialchars($_POST['phone']);
+    $tour        = htmlspecialchars($_POST['department']);
+    $date        = htmlspecialchars($_POST['date']);
+    $guests      = intval($_POST['guests']);
+    $messageText = htmlspecialchars($_POST['message']);
 
-  // Uncomment below code if you want to use SMTP to send emails. You need to enter your correct SMTP credentials
-  /*
-  $contact->smtp = array(
-    'host' => 'example.com',
-    'username' => 'example',
-    'password' => 'pass',
-    'port' => '587'
-  );
-  */
+    $mail = new PHPMailer(true);
 
-  $contact->add_message( $_POST['name'], 'Name');
-  $contact->add_message( $_POST['email'], 'Email');
-  $contact->add_message( $_POST['phone'], 'Phone');
-  isset($_POST['date']) && $contact->add_message($_POST['date'], 'Appointment Date');
-  isset($_POST['time']) && $contact->add_message($_POST['time'], 'Appointment Time');
-  isset($_POST['department']) && $contact->add_message($_POST['department'], 'Department');
-  isset($_POST['doctor']) && $contact->add_message($_POST['doctor'], 'Doctor');
-  $contact->add_message( $_POST['message'], 'Message');
+    try {
+        // SMTP settings
+        $mail->isSMTP();
+        $mail->Host = 'smtp.hostinger.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'info@mirissariverkayaktours.com';
+        $mail->Password = 'MirissaKayakTours@123';
+        $mail->SMTPSecure = 'tls';
+        $mail->Port = 587;
 
-  echo $contact->send();
+        $mail->SMTPOptions = [
+            'ssl' => [
+                'verify_peer'       => false,
+                'verify_peer_name'  => false,
+                'allow_self_signed' => true
+            ]
+        ];
+
+        // Email details
+        $mail->setFrom('info@mirissariverkayaktours.com', 'Kayak Tours Mirissa');
+        $mail->addAddress('visualvibegraphicslk@gmail.com');
+        $mail->addAddress('info@mirissariverkayaktours.com');
+        $mail->addReplyTo($email, $name);
+
+        $mail->Subject = "New Inquiry From $name – Kayak Tours Mirissa";
+
+        // Load template
+        $emailBody = file_get_contents('../email_template.html');
+
+        // Replace placeholders
+        $search = [
+            '{{name}}', '{{email}}', '{{phone}}',
+            '{{tour}}', '{{date}}', '{{guests}}', '{{message}}'
+        ];
+
+        $replace = [
+            $name, $email, $phone, $tour, $date, $guests, nl2br($messageText)
+        ];
+
+        $emailBody = str_replace($search, $replace, $emailBody);
+
+        $mail->isHTML(true);
+        $mail->Body = $emailBody;
+
+        if ($mail->send()) {
+            http_response_code(200);
+            echo "Message sent successfully.";
+        } else {
+            http_response_code(500);
+            echo "Email sending failed.";
+        }
+
+    } catch (Exception $e) {
+        http_response_code(500);
+        echo "Mailer Error: " . $mail->ErrorInfo;
+    }
+
+} else {
+    http_response_code(405);
+    echo "Invalid request.";
+}
 ?>

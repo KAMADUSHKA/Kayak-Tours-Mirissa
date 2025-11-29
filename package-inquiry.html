@@ -138,7 +138,7 @@
           <!-- Appointment Form -->
           <div class="col-lg-6">
             <div class="appointment-form-wrapper" data-aos="fade-up" data-aos-delay="200">
-              <form action="forms/appointment.php" method="post" class="appointment-form php-email-form">
+              <form method="post" class="appointment-form php-email-form" id="contactForm">
                 <div class="row gy-3">
 
                   <div class="col-md-6">
@@ -166,7 +166,7 @@
                   </div>
 
                   <div class="col-md-6">
-                    <input type="date" name="date" class="form-control" required="">
+                    <input type="date" name="date" id="date" class="form-control" required="">
                   </div>
 
                   <div class="col-md-6">
@@ -182,9 +182,7 @@
                     <div class="error-message"></div>
                     <div class="sent-message">Your inquiry has been sent successfully! We’ll contact you soon.</div>
 
-                    <button type="submit" class="btn btn-appointment w-100">
-                      <i class="bi bi-calendar-plus me-2"></i>Send Inquiry
-                    </button>
+                    <button type="submit" class="btn btn-appointment w-100">Send Inquiry</button>
                   </div>
 
                 </div>
@@ -340,3 +338,51 @@
 </body>
 
 </html>
+
+<!-- Form Submission -->
+<script>
+document.getElementById('appointment-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const form = e.target;
+    const formData = new FormData(form);
+
+    const loading = document.querySelector('.loading');
+    const errorDiv = document.querySelector('.error-message');
+    const successDiv = document.querySelector('.sent-message');
+
+    // Reset messages
+    loading.style.display = "block";
+    errorDiv.style.display = "none";
+    successDiv.style.display = "none";
+
+    try {
+        const response = await fetch('send_email.php', {
+            method: 'POST',
+            body: formData
+        });
+
+        loading.style.display = "none";
+
+        if (response.ok) {
+            successDiv.style.display = "block";
+            form.reset();
+        } else {
+            const errorText = await response.text();
+            errorDiv.textContent = errorText || "Something went wrong!";
+            errorDiv.style.display = "block";
+        }
+
+    } catch (error) {
+        loading.style.display = "none";
+        errorDiv.textContent = "Failed to send message.";
+        errorDiv.style.display = "block";
+    }
+});
+
+// Min date for calendar
+const today = new Date().toISOString().split('T')[0];
+document.getElementById('date').setAttribute('min', today);
+</script>
+
+

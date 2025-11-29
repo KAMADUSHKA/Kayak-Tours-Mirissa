@@ -1,42 +1,80 @@
 <?php
-  /**
-  * Requires the "PHP Email Form" library
-  * The "PHP Email Form" library is available only in the pro version of the template
-  * The library should be uploaded to: vendor/php-email-form/php-email-form.php
-  * For more info and help: https://bootstrapmade.com/php-email-form/
-  */
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
-  // Replace contact@example.com with your real receiving email address
-  $receiving_email_address = 'contact@example.com';
+require 'vendor/autoload.php';
 
-  if( file_exists($php_email_form = '../assets/vendor/php-email-form/php-email-form.php' )) {
-    include( $php_email_form );
-  } else {
-    die( 'Unable to load the "PHP Email Form" Library!');
-  }
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-  $contact = new PHP_Email_Form;
-  $contact->ajax = true;
-  
-  $contact->to = $receiving_email_address;
-  $contact->from_name = $_POST['name'];
-  $contact->from_email = $_POST['email'];
-  $contact->subject = $_POST['subject'];
+    // Get inputs
+    $name         = htmlspecialchars($_POST['name']);
+    $mobile       = htmlspecialchars($_POST['mobile']);
+    $email        = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
+    $country      = htmlspecialchars($_POST['country']);
+    $looking_for  = htmlspecialchars($_POST['looking_for']);
+    $experience   = htmlspecialchars($_POST['experience']);
+    $participants = intval($_POST['participants']);
+    $date         = htmlspecialchars($_POST['date']);
+    $note         = htmlspecialchars($_POST['note']);
 
-  // Uncomment below code if you want to use SMTP to send emails. You need to enter your correct SMTP credentials
-  /*
-  $contact->smtp = array(
-    'host' => 'example.com',
-    'username' => 'example',
-    'password' => 'pass',
-    'port' => '587'
-  );
-  */
+    $mail = new PHPMailer(true);
+    try {
+        $mail->isSMTP();
+        $mail->Host = 'smtp.hostinger.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'info@divingmirissa.com';
+        $mail->Password = 'divingMirissa@123';
+        $mail->SMTPSecure = 'tls';
+        $mail->Port = 587;     
+        
+        $mail->SMTPOptions = [
+            'ssl' => [
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => true
+            ]
+        ];
 
-  $contact->add_message( $_POST['name'], 'From');
-  $contact->add_message( $_POST['email'], 'Email');
-  isset($_POST['phone']) && $contact->add_message($_POST['phone'], 'Phone');
-  $contact->add_message( $_POST['message'], 'Message', 10);
+        // Email sender and recipients
+        $mail->setFrom('info@divingmirissa.com', 'Diving Mirissa');
+        $mail->addAddress('Thasheenkavindra@gmail.com');
+        $mail->addAddress('info@divingmirissa.com');
+        $mail->addReplyTo($email, $name);
 
-  echo $contact->send();
+        // Email subject
+        $mail->Subject = "New Inquiry From Customer $name";
+
+        // Load email template
+        $emailBody = file_get_contents('email_template.html');
+
+        // Replace placeholders with actual form data
+        $emailBody = str_replace('{{name}}', $name, $emailBody);
+        $emailBody = str_replace('{{email}}', $email, $emailBody);
+        $emailBody = str_replace('{{phone}}', $mobile, $emailBody);
+        $emailBody = str_replace('{{country}}', $country, $emailBody);
+        $emailBody = str_replace('{{looking_for}}', $looking_for, $emailBody);
+        $emailBody = str_replace('{{experience}}', $experience, $emailBody);
+        $emailBody = str_replace('{{participants}}', $participants, $emailBody);
+        $emailBody = str_replace('{{date}}', $date, $emailBody);
+        $emailBody = str_replace('{{note}}', nl2br($note), $emailBody);
+
+        $mail->isHTML(true);
+        $mail->Body = $emailBody;
+
+        if ($mail->send()) {
+            http_response_code(200);
+            echo 'Message sent successfully';
+        } else {
+            http_response_code(500); 
+            echo 'Message could not be sent.';
+        }
+            
+    } catch (Exception $e) {
+        http_response_code(500); 
+        echo 'Mailer Error: ' . $mail->ErrorInfo;
+    }
+    
+} else {
+    http_response_code(500); 
+}
 ?>
