@@ -358,7 +358,7 @@
       successDiv.style.display = "none";
       errorDiv.textContent = "";
 
-      // try {
+      try {
           const response = await fetch('send_email.php', {
               method: 'POST',
               body: formData
@@ -381,12 +381,12 @@
               errorDiv.style.display = "block";
           }
 
-      // } catch (error) {
-      //     loading.style.display = "none";
-      //     errorDiv.textContent = "Failed to send message. Please check your connection.";
-      //     errorDiv.style.display = "block";
-      //     console.error('Error:', error);
-      // }
+      } catch (error) {
+          loading.style.display = "none";
+          errorDiv.textContent = "Failed to send message. Please check your connection.";
+          errorDiv.style.display = "block";
+          console.error('Error:', error);
+      }
   });
 
   // Set minimum date to today

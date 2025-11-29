@@ -806,54 +806,52 @@
           <!-- Appointment Form -->
           <div class="col-lg-6">
             <div class="appointment-form-wrapper" data-aos="fade-up" data-aos-delay="200">
-              <form method="post" class="appointment-form php-email-form" id="appointment-form">
+              
+              <form method="post" action="send_email.php" class="appointment-form php-email-form" id="appointment-form">
                 <div class="row gy-3">
 
                   <div class="col-md-6">
-                    <input type="text" name="name" class="form-control" placeholder="Your Full Name" required="">
+                    <input type="text" name="name" class="form-control" placeholder="Your Full Name" required>
                   </div>
 
                   <div class="col-md-6">
-                    <input type="email" name="email" class="form-control" placeholder="Your Email" required="">
+                    <input type="email" name="email" class="form-control" placeholder="Your Email" required>
                   </div>
 
                   <div class="col-md-6">
-                    <input type="tel" name="phone" class="form-control" placeholder="Your Phone Number" required="">
+                    <input type="tel" name="phone" class="form-control" placeholder="Your Phone Number" required>
                   </div>
 
                   <div class="col-md-6">
-                    <select name="department" class="form-select" required="">
+                    <select name="department" class="form-select" required>
                       <option value="">Select Tour Package</option>
                       <option value="sunrise-tour">Sunrise Kayak Tour</option>
-                      <option value="daytime-tour">Sunset Kayak Tour</option>
-                      <option value="sunset-tour">Sunrise & Sunset Kayak Tours</option>
-                      <option value="half-day-tour">Kayak Boat Retal</option>
-                      <option value="private-tour">Guided Kayak Tours</option>
-                      <option value="family-tour">Mangrove Discovery Kayak Tour</option>
+                      <option value="daytime-tour">Daytime Adventure Tour</option>
+                      <option value="sunset-tour">Sunset Kayak Tour</option>
+                      <option value="half-day-tour">Kayak Boat Rental</option>
+                      <option value="private-tour">Private Kayak Tour</option>
+                      <option value="family-tour">Family & Group Kayak Tour</option>
                     </select>
                   </div>
 
                   <div class="col-md-6">
-                    <input type="date" name="date" class="form-control" required="">
+                    <input type="date" name="date" id="date" class="form-control" required>
                   </div>
 
                   <div class="col-md-6">
-                    <input type="number" name="guests" class="form-control" placeholder="Number of Guests" required="">
+                    <input type="number" name="guests" class="form-control" placeholder="Number of Guests" min="1" required>
                   </div>
 
                   <div class="col-12">
-                    <textarea class="form-control" name="message" rows="5"
-                      placeholder="Tell us more about your preferred experience (optional)"></textarea>
+                    <textarea class="form-control" name="message" rows="5" placeholder="Tell us more about your preferred experience (optional)"></textarea>
                   </div>
 
                   <div class="col-12">
-                    <div class="loading">Loading</div>
-                    <div class="error-message"></div>
-                    <div class="sent-message">Your inquiry has been sent successfully! We’ll contact you soon.</div>
+                    <div class="loading" style="display: none;">Processing Please Wait</div>
+                    <div class="error-message" style="display: none;"></div>
+                    <div class="sent-message" style="display: none;">Your inquiry has been sent successfully! We'll contact you soon.</div>
 
-                    <button type="submit" class="btn btn-appointment w-100">
-                      <i class="bi bi-calendar-plus me-2"></i>Send Inquiry
-                    </button>
+                    <button type="submit" class="btn btn-appointment w-100">Send Inquiry</button>
                   </div>
 
                 </div>
@@ -1269,46 +1267,54 @@
 
 <!-- Form Submission -->
 <script>
-  document.getElementById('appointment-form').addEventListener('submit', async function (e) {
-    e.preventDefault(); // Prevent default form submission
+  document.getElementById('appointment-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
 
-    const form = e.target;
-    const formData = new FormData(form);
-    const statusDiv = document.getElementById('formStatus');
+      const form = e.target;
+      const formData = new FormData(form);
 
-    // Show "Processing..." message immediately
-    statusDiv.textContent = 'Processing... please wait';
-    statusDiv.className = 'form-status processing';
-    statusDiv.style.display = 'block';
+      const loading = form.querySelector('.loading');
+      const errorDiv = form.querySelector('.error-message');
+      const successDiv = form.querySelector('.sent-message');
 
-    try {
-      const response = await fetch('send_email.php', {
-        method: 'POST',
-        body: formData
-      });
+      // Reset and show loading
+      loading.style.display = "block";
+      errorDiv.style.display = "none";
+      successDiv.style.display = "none";
+      errorDiv.textContent = "";
 
-      if (response.ok) {
-        statusDiv.textContent = 'Message sent successfully!';
-        statusDiv.className = 'form-status success';
-        form.reset(); // Clear the form
-      } else {
-        const errorText = await response.text();
-        throw new Error(errorText);
+      try {
+          const response = await fetch('send_email.php', {
+              method: 'POST',
+              body: formData
+          });
+
+          loading.style.display = "none";
+
+          if (response.ok) {
+              const result = await response.text();
+              successDiv.style.display = "block";
+              form.reset();
+              
+              // Hide success message after 5 seconds
+              setTimeout(() => {
+                  successDiv.style.display = "none";
+              }, 5000);
+          } else {
+              const errorText = await response.text();
+              errorDiv.textContent = errorText || "Something went wrong. Please try again.";
+              errorDiv.style.display = "block";
+          }
+
+      } catch (error) {
+          loading.style.display = "none";
+          errorDiv.textContent = "Failed to send message. Please check your connection.";
+          errorDiv.style.display = "block";
+          console.error('Error:', error);
       }
-    } catch (error) {
-      console.error(error);
-      statusDiv.textContent = 'There was a problem sending your message.';
-      statusDiv.className = 'form-status error';
-    }
-
-    // Hide message after 3 seconds
-    setTimeout(() => {
-      statusDiv.style.display = 'none';
-    }, 3000);
   });
 
-  // Set today's date as min date
+  // Set minimum date to today
   const today = new Date().toISOString().split('T')[0];
   document.getElementById('date').setAttribute('min', today);
-
 </script>
