@@ -1,7 +1,4 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
@@ -39,10 +36,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             ]
         ];
 
-        // Enable debugging (remove after testing)
-        $mail->SMTPDebug = 2;  // 0 = off, 1 = client, 2 = client and server
-        $mail->Debugoutput = 'html';
-
         // From & To
         $mail->setFrom('info@kayakmirissa.com', 'Mirissa Kayak Tours');
         $mail->addAddress('visualvibegraphicslk@gmail.com');
@@ -59,10 +52,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $emailBody = str_replace('{{name}}', $name, $emailBody);
         $emailBody = str_replace('{{email}}', $email, $emailBody);
         $emailBody = str_replace('{{phone}}', $phone, $emailBody);
-        $emailBody = str_replace('{{tour}}', $tour, $emailBody);  // ADD THIS LINE
-        $emailBody = str_replace('{{guests}}', $guests, $emailBody);  // ADD THIS TOO
+        $emailBody = str_replace('{{tour}}', $tour, $emailBody); 
+        $emailBody = str_replace('{{guests}}', $guests, $emailBody);
         $emailBody = str_replace('{{date}}', $date, $emailBody);
-        $emailBody = str_replace('{{message}}', nl2br($note), $emailBody);  // ADD THIS
+        $emailBody = str_replace('{{note}}', nl2br($note), $emailBody);
 
         $mail->isHTML(true);
         $mail->Body = $emailBody;
