@@ -1,8 +1,11 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-require '../vendor/autoload.php';
+require __DIR__ . '/vendor/autoload.php';  // FIXED PATH
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -18,15 +21,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $mail = new PHPMailer(true);
 
     try {
-        // SMTP Settings
+        // SMTP Settings for Hostinger
         $mail->isSMTP();
         $mail->Host = 'smtp.hostinger.com';
         $mail->SMTPAuth = true;
-        $mail->Username = 'info@kayaktoursmirissa.com'; 
-        $mail->Password = 'MirissaKayakTours@123'; 
-        $mail->SMTPSecure = 'tls';
+        $mail->Username = 'info@kayakmirissa.com'; 
+        $mail->Password = 'KayakMirissa@123'; 
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;  // Use constant instead of string
         $mail->Port = 587;
 
+        // Remove SMTPOptions or use minimal settings
         $mail->SMTPOptions = [
             'ssl' => [
                 'verify_peer' => false,
@@ -34,6 +38,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 'allow_self_signed' => true
             ]
         ];
+
+        // Enable debugging (remove after testing)
+        $mail->SMTPDebug = 2;  // 0 = off, 1 = client, 2 = client and server
+        $mail->Debugoutput = 'html';
 
         // From & To
         $mail->setFrom('info@kayaktoursmirissa.com', 'Mirissa Kayak Tours');
@@ -45,15 +53,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $mail->Subject = "New Inquiry From Customer $name";
 
         // Load email template
-        $emailBody = file_get_contents('email_template.html');
+        $emailBody = file_get_contents(__DIR__ . '/email_template.html');
 
         // Replace placeholders with actual form data
         $emailBody = str_replace('{{name}}', $name, $emailBody);
         $emailBody = str_replace('{{email}}', $email, $emailBody);
         $emailBody = str_replace('{{phone}}', $phone, $emailBody);
-        $emailBody = str_replace('{{participants}}', $guests, $emailBody);
+        $emailBody = str_replace('{{tour}}', $tour, $emailBody);  // ADD THIS LINE
+        $emailBody = str_replace('{{guests}}', $guests, $emailBody);  // ADD THIS TOO
         $emailBody = str_replace('{{date}}', $date, $emailBody);
-        $emailBody = str_replace('{{note}}', nl2br($note), $emailBody);
+        $emailBody = str_replace('{{message}}', nl2br($note), $emailBody);  // ADD THIS
 
         $mail->isHTML(true);
         $mail->Body = $emailBody;
