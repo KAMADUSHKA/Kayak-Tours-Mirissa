@@ -1296,14 +1296,19 @@
               successDiv.style.display = "block";
               form.reset();
               
-              // Hide success message after 5 seconds
+              // Hide success message after 3 seconds
               setTimeout(() => {
                   successDiv.style.display = "none";
-              }, 5000);
+              }, 3000);
           } else {
               const errorText = await response.text();
               errorDiv.textContent = errorText || "Something went wrong. Please try again.";
               errorDiv.style.display = "block";
+
+              // Hide success message after 3 seconds
+              setTimeout(() => {
+                  errorDiv.style.display = "none";
+              }, 3000);
           }
 
       } catch (error) {
