@@ -180,7 +180,7 @@
 
                   <div class="col-12">
                     <div class="loading" style="display: none;">Processing Please Wait</div>
-                    <!-- <div class="error-message" style="display: none;"></div> -->
+                    <div class="error-message" style="display: none;"></div>
                     <div class="sent-message" style="display: none;">Your inquiry has been sent successfully! We'll contact you soon.</div>
 
                     <button type="submit" class="btn btn-appointment w-100">Send Inquiry</button>
@@ -349,13 +349,16 @@
       const formData = new FormData(form);
 
       const loading = form.querySelector('.loading');
+      const errorDiv = form.querySelector('.error-message');
       const successDiv = form.querySelector('.sent-message');
 
       // Reset and show loading
       loading.style.display = "block";
+      errorDiv.style.display = "none";
       successDiv.style.display = "none";
+      errorDiv.textContent = "";
 
-      try {
+      // try {
           const response = await fetch('send_email.php', {
               method: 'POST',
               body: formData
@@ -373,16 +376,17 @@
                   successDiv.style.display = "none";
               }, 5000);
           } else {
-              // const errorText = await response.text();
-              // loading.textContent = errorText || "Something went wrong. Please try again.";
-              // loading.style.display = "block";
+              const errorText = await response.text();
+              errorDiv.textContent = errorText || "Something went wrong. Please try again.";
+              errorDiv.style.display = "block";
           }
 
-      } catch (error) {
-          loading.textContent = "Failed to send message. Please check your connection.";
-          loading.style.display = "block";
-          console.error('Error:', error);
-      }
+      // } catch (error) {
+      //     loading.style.display = "none";
+      //     errorDiv.textContent = "Failed to send message. Please check your connection.";
+      //     errorDiv.style.display = "block";
+      //     console.error('Error:', error);
+      // }
   });
 
   // Set minimum date to today
