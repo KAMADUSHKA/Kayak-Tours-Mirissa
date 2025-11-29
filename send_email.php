@@ -44,9 +44,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $mail->Debugoutput = 'html';
 
         // From & To
-        $mail->setFrom('info@kayaktoursmirissa.com', 'Mirissa Kayak Tours');
+        $mail->setFrom('info@kayakmirissa.com', 'Mirissa Kayak Tours');
         $mail->addAddress('visualvibegraphicslk@gmail.com');
-        $mail->addAddress('info@kayaktoursmirissa.com');
+        $mail->addAddress('info@kayakmirissa.com');
         $mail->addReplyTo($email, $name);
 
         // Email subject
