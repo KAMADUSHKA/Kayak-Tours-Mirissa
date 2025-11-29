@@ -139,7 +139,7 @@
           <div class="col-lg-6">
             <div class="appointment-form-wrapper" data-aos="fade-up" data-aos-delay="200">
               
-              <form method="post" action="send_email.php" class="appointment-form php-email-form" id="appointment-form">
+              <form method="post" class="appointment-form php-email-form" id="appointment-form">
                 <div class="row gy-3">
 
                   <div class="col-md-6">
@@ -377,7 +377,7 @@
               }, 3000);
           } else {
               const errorText = await response.text();
-              errorDiv.textContent = errorText || "Something went wrong. Please try again.";
+              errorDiv.textContent =  "Something went wrong. Please try again.";
               errorDiv.style.display = "block";
 
               // Hide success message after 3 seconds
