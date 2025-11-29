@@ -180,7 +180,7 @@
 
                   <div class="col-12">
                     <div class="loading" style="display: none;">Processing Please Wait</div>
-                    <div class="error-message" style="display: none;"></div>
+                    <!-- <div class="error-message" style="display: none;"></div> -->
                     <div class="sent-message" style="display: none;">Your inquiry has been sent successfully! We'll contact you soon.</div>
 
                     <button type="submit" class="btn btn-appointment w-100">Send Inquiry</button>
@@ -349,14 +349,14 @@
       const formData = new FormData(form);
 
       const loading = form.querySelector('.loading');
-      const errorDiv = form.querySelector('.error-message');
+      // const errorDiv = form.querySelector('.error-message');
       const successDiv = form.querySelector('.sent-message');
 
       // Reset and show loading
       loading.style.display = "block";
-      errorDiv.style.display = "none";
+      // errorDiv.style.display = "none";
       successDiv.style.display = "none";
-      errorDiv.textContent = "";
+      // errorDiv.textContent = "";
 
       try {
           const response = await fetch('send_email.php', {
@@ -376,20 +376,21 @@
                   successDiv.style.display = "none";
               }, 3000);
           } else {
-              const errorText = await response.text();
-              errorDiv.textContent = errorText || "Something went wrong. Please try again.";
-              errorDiv.style.display = "block";
+            loading.style.display = "none";
+              // const errorText = await response.text();
+              // errorDiv.textContent = errorText || "Something went wrong. Please try again.";
+              // errorDiv.style.display = "block";
 
-              // Hide success message after 3 seconds
-              setTimeout(() => {
-                  errorDiv.style.display = "none";
-              }, 3000);
+              // // Hide success message after 3 seconds
+              // setTimeout(() => {
+              //     errorDiv.style.display = "none";
+              // }, 3000);
           }
 
       } catch (error) {
           loading.style.display = "none";
-          errorDiv.textContent = "Failed to send message. Please check your connection.";
-          errorDiv.style.display = "block";
+          // errorDiv.textContent = "Failed to send message. Please check your connection.";
+          // errorDiv.style.display = "block";
           console.error('Error:', error);
       }
   });
