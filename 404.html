@@ -2,20 +2,143 @@
 <html lang="en">
 
 <head>
+  <!-- Main -->
   <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>404 - Mirissa Kayak Tours</title>
-  <meta name="description" content="">
-  <meta name="keywords" content="">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, maximum-scale=1, initial-scale=1, user-scalable=0">
 
-  <!-- Favicons -->
-  <link href="assets/img/favicon.png" rel="icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <title>Mirissa Kayak Tours | Mirissa Best Kayak Experience</title>
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
+
+  <!-- Swiper JS -->
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+  <!-- AOS JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
+    <!-- Structured Data (JSON-LD) - For SEO -->
+  <script type="application/ld+json">
+    {
+        "@context" : "https://schema.org",
+        "@type" : "WebSite",
+        "name" : "Kayak Mirissa",
+        "alternateName" : "MSA",
+        "url" : "https://www.kayakmirissa.com/",
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": {
+            "@type": "EntryPoint",
+            "urlTemplate": "https://www.kayakmirissa.com/search?q={search_term_string}"
+            },
+            "query-input": "required name=search_term_string"
+        }
+    }
+  </script>
+
+  <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": "Kayak Mirissa",
+        "image": "https://www.kayakmirissa.com/assets/img/favicon.png",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Garanduwa Rd, Mirissa, Sri Lanka",
+            "addressLocality": "Mirissa",
+            "addressRegion": "Southern Province",
+            "postalCode": "81740",
+            "addressCountry": "Sri Lanka"
+        },
+        "url": "https://www.kayakmirissa.com/",
+        "telephone": "++94760312028"
+    }
+  </script>    
+
+  <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "Gallery",
+        "url": "https://www.kayakmirissa.com/gallery.html"
+    }
+  </script>
+
+  <!-- Sub Main -->
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <meta name="googlebot" content="index, follow">
+  <meta name="bingbot" content="index, follow">
+  <meta name="slurp" content="index, follow">
+  <meta name="referrer" content="no-referrer">
+  <meta name="description"
+      content="Join with 'Kayak Mirissa' to  Discover the natural beauty of Mirissa with peaceful lagoon kayaking tours guided by our experienced local team. We ensure every guest enjoys a 
+      safe, comfortable, and unforgettable journey through scenic waterways and mangrove forests.">
+  <meta name="keywords"
+      content="Kayak Tours Mirssa, River Kayak tours, kayak Tours, Sunset kayak Tours, Sunrise Kayak tours, mind Relax Kayak tours, Couple kayak tours, Photography kayak Tours">
+  <meta name="author" content="Kayak Mirissa">
+  <meta name="copyright" content="© 2024 Kayak Mirissa">
+  <link rel="canonical" href="https://www.kayakmirissa.com/">
+
+    <!-- sitemap.xml -->
+  <link rel="sitemap" type="application/xml" title="Sitemap" href="https://www.kayakmirissa.com/sitemap.xml">
+
+  <!-- Preload -->
+  <link rel="preload" href="https://unpkg.com/swiper/swiper-bundle.min.css" as="style">
+
+  <!-- Mobile Optimization Tags -->
+  <meta name="theme-color" content="#fb9324">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Kayak Mirissa">
+  <meta name="application-name" content="Kayak Mirissa">
+
+  <!-- Dublin Core Meta Tags -->
+  <meta name="DC.title" content="Kayak Mirissa">
+  <meta name="DC.creator" content="Kayak Mirissa">
+  <meta name="DC.subject" content="Kayak Tours Mirssa, River Kayak tours, kayak Tours, Sunset kayak Tours, Sunrise Kayak tours, mind Relax Kayak tours, Couple kayak tours, Photography kayak Tours">
+  <meta name="DC.description"
+      content="Join with 'Kayak Mirissa' to  Discover the natural beauty of Mirissa with peaceful lagoon kayaking tours guided by our experienced local team. We ensure every guest enjoys a 
+      safe, comfortable, and unforgettable journey through scenic waterways and mangrove forests.">
+  <meta name="DC.publisher" content="Kayak Mirissa">
+  <meta name="DC.contributor" content="Web Mind Innovation">
+  <meta name="DC.date" content="2025-12-01">
+  <meta name="DC.type" content="Text">
+  <meta name="DC.format" content="text/html">
+  <meta name="DC.identifier" content="https://www.kayakmirissa.com/">
+  <meta name="DC.language" content="en">
+  <meta name="DC.coverage" content="World">
+  <meta name="DC.rights" content="© 2024 Kayak Mirissa. All rights reserved.">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="en_GB">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Kayak Mirissa">
+  <meta property="og:description"
+      content="Join with 'Kayak Mirissa' to  Discover the natural beauty of Mirissa with peaceful lagoon kayaking tours guided by our experienced local team. We ensure every guest enjoys a 
+      safe, comfortable, and unforgettable journey through scenic waterways and mangrove forests.">
+  <meta property="og:image" content="https://www.kayakmirissa.com/assets/img/favicon.png">
+  <meta property="og:url" content="https://www.kayakmirissa.com/index.html">
+  <meta property="og:site_name" content="Kayak Mirissa">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Kayak Mirissa">
+  <meta name="twitter:description"
+      content="Join with 'Kayak Mirissa' to  Discover the natural beauty of Mirissa with peaceful lagoon kayaking tours guided by our experienced local team. We ensure every guest enjoys a 
+      safe, comfortable, and unforgettable journey through scenic waterways and mangrove forests.">
+  <meta name="twitter:image" content="https://www.kayakmirissa.com/assets/img/favicon.png">
+  <meta name="twitter:site" content="@kayakmirissa">
+  <meta name="twitter:creator" content="@kayakmirissa">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
   <!-- Vendor CSS Files -->
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -24,9 +147,17 @@
   <link href="assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
   <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
   <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
 
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
+
+  <!-- Swiper CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+
+  <!-- AOS CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />  
 
 </head>
 
